@@ -37,11 +37,11 @@ describe('Test find customer use case', () => {
         await customerRepository.create(customer)
 
         const input: FindCustomerInputDTO = {
-            id: "123"
+            id: customer.Id
         }
 
         const usecase = new FindCustomerUseCase(customerRepository)
-        const output = usecase.execute(input)
+        const output = await usecase.execute(input)
 
         const expected: FindCustomerOutputDTO = {
             id: "123",
