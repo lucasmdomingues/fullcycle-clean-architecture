@@ -29,7 +29,7 @@ describe('E2E tests for customer', () => {
         }
 
         const response = await request(app).
-            post("/customer").
+            post("/customers").
             send(data)
 
         expect(response.status).toBe(200)
@@ -44,7 +44,7 @@ describe('E2E tests for customer', () => {
 
     it('should not create a customer', async () => {
         const app = await NewExpress()
-        const response = await request(app).post("/customer").send({ name: "John" })
+        const response = await request(app).post("/customers").send({ name: "John" })
 
         expect(response.status).toBe(500)
     })
@@ -52,7 +52,7 @@ describe('E2E tests for customer', () => {
     it('should list all customers', async () => {
         const app = await NewExpress()
 
-        let response = await request(app).post("/customer").send({
+        let response = await request(app).post("/customers").send({
             name: "John",
             address: {
                 street: "Street",
@@ -63,7 +63,7 @@ describe('E2E tests for customer', () => {
         })
         expect(response.statusCode).toBe(200)
 
-        response = await request(app).post("/customer").send({
+        response = await request(app).post("/customers").send({
             name: "Jane",
             address: {
                 street: "Street 2",
@@ -74,7 +74,7 @@ describe('E2E tests for customer', () => {
         })
         expect(response.statusCode).toBe(200)
 
-        response = await request(app).get("/customer").send()
+        response = await request(app).get("/customers").send()
         expect(response.status).toBe(200)
         expect(response.body.customers).toHaveLength(2)
     })
