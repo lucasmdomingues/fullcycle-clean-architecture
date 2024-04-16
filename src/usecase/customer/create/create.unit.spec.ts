@@ -39,7 +39,7 @@ describe('Unit test create customer use case', () => {
 
         input.name = ''
 
-        await expect(usecase.execute(input)).rejects.toThrow("customer name cannot be empty")
+        await expect(usecase.execute(input)).rejects.toThrow("customer: name cannot be empty")
     })
 
     it('shoud thrown an error when address is missing', async () => {

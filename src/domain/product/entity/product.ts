@@ -1,15 +1,21 @@
+import Entity from "../../@shared/entity/entity.abstract"
+import NotificationError from "../../@shared/notification/notification.error"
 import ProductInterface from "./product.interface"
 
-class Product implements ProductInterface {
-    private id: string
+class Product extends Entity implements ProductInterface {
     private name: string
     private price: number
 
     constructor(id: string, name: string, price: number) {
+        super()
         this.id = id
         this.name = name
         this.price = price
         this.validate();
+
+        if (this.notification.hasErrors()) {
+            throw new NotificationError(this.notification.getErrors());
+        }
     }
 
     get ID(): string {
@@ -26,13 +32,13 @@ class Product implements ProductInterface {
 
     validate(): void {
         if (this.id.length === 0) {
-            throw new Error("product id cannot be empty");
+            this.notification.addError({ context: "product", message: "id cannot be empty" });
         }
         if (this.name.length === 0) {
-            throw new Error("product name cannot be empty");
+            this.notification.addError({ context: "product", message: "name cannot be empty" });
         }
         if (this.price < 0) {
-            throw new Error("product price cannot be empty");
+            this.notification.addError({ context: "product", message: "price cannot be empty" });
         }
     }
 
