@@ -11,4 +11,8 @@ export default abstract class Entity {
     get Id(): string {
         return this.id
     }
+
+    get Notification(): Notification {
+        return this.notification
+    }
 }

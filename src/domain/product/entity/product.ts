@@ -1,5 +1,6 @@
 import Entity from "../../@shared/entity/entity.abstract"
 import NotificationError from "../../@shared/notification/notification.error"
+import ProductValidatorFactory from "../factory/product.validator.factory"
 import ProductInterface from "./product.interface"
 
 class Product extends Entity implements ProductInterface {
@@ -31,15 +32,7 @@ class Product extends Entity implements ProductInterface {
     }
 
     validate(): void {
-        if (this.id.length === 0) {
-            this.notification.addError({ context: "product", message: "id cannot be empty" });
-        }
-        if (this.name.length === 0) {
-            this.notification.addError({ context: "product", message: "name cannot be empty" });
-        }
-        if (this.price < 0) {
-            this.notification.addError({ context: "product", message: "price cannot be empty" });
-        }
+        ProductValidatorFactory.create().validate(this)
     }
 
     changeName(newName: string): void {
