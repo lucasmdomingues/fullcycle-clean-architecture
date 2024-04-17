@@ -2,6 +2,8 @@ import express, { Request, Response } from 'express'
 import CreateCustomerUseCase from '../../../../usecase/customer/create/create.usecase'
 import CustomerRepository from '../../../customer/repository/sequelize/customer.repository'
 import ListCustomerUseCase from '../../../../usecase/customer/list/list.usecase'
+import { json } from 'sequelize'
+import CustomerPresenter from '../presenters/customer.presenter'
 
 export function NewCustomerRouter(repository: CustomerRepository): express.IRouter {
     const router = express.Router()
@@ -30,13 +32,12 @@ export function NewCustomerRouter(repository: CustomerRepository): express.IRout
 
     router.get("/", async (req: Request, res: Response) => {
         const usecase = new ListCustomerUseCase(repository)
+        const output = await usecase.execute({})
 
-        try {
-            const output = await usecase.execute({})
-            res.send(output)
-        } catch (err) {
-            res.status(500).send(err)
-        }
+        res.format({
+            json: async () => res.send(output),
+            xml: async () => res.send(CustomerPresenter.toXML(output))
+        })
     })
 
     return router

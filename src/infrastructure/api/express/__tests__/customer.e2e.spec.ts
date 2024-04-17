@@ -52,6 +52,7 @@ describe('E2E tests for customer', () => {
     it('should list all customers', async () => {
         const app = await NewExpress()
 
+        // JSON
         let response = await request(app).post("/customers").send({
             name: "John",
             address: {
@@ -77,5 +78,14 @@ describe('E2E tests for customer', () => {
         response = await request(app).get("/customers").send()
         expect(response.status).toBe(200)
         expect(response.body.customers).toHaveLength(2)
+
+        // XML
+        response = await request(app).
+            get("/customers").
+            set("Accept", "application/xml").
+            send()
+
+        expect(response.status).toBe(200)
+        expect(response.text).toContain(`<?xml version="1.0" encoding="UTF-8"?>`)
     })
 })
