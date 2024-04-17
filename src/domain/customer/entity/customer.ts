@@ -2,7 +2,7 @@ import Entity from "../../@shared/entity/entity.abstract";
 import NotificationError from "../../@shared/notification/notification.error";
 import Address from "../value-object/address";
 
-export default class Customer extends Entity{
+export default class Customer extends Entity {
     private name: string;
     private address!: Address;
     private active: boolean = false;

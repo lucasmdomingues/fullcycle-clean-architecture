@@ -58,7 +58,7 @@ describe('Create product usecase unit tests', () => {
             price: productMocked.Price
         }
 
-        await expect(() => usecase.execute(input)).rejects.toThrow('product id cannot be empty')
+        await expect(() => usecase.execute(input)).rejects.toThrow('product: id cannot be empty')
     })
     
     it('should throw an error when product name is missing', async () => {
@@ -71,7 +71,7 @@ describe('Create product usecase unit tests', () => {
             price: productMocked.Price
         }
 
-        await expect(() => usecase.execute(input)).rejects.toThrow('product name cannot be empty')
+        await expect(() => usecase.execute(input)).rejects.toThrow('product: name cannot be empty')
     })
     
     it('should throw an error when product price is missing', async () => {
@@ -84,6 +84,6 @@ describe('Create product usecase unit tests', () => {
             price: -1
         }
 
-        await expect(() => usecase.execute(input)).rejects.toThrow('product price cannot be empty')
+        await expect(() => usecase.execute(input)).rejects.toThrow('product: price cannot be empty')
     })
 })

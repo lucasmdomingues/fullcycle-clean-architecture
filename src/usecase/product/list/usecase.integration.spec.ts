@@ -39,6 +39,10 @@ describe('List product usecase tests', () => {
         const usecase = new ListProductUseCase(repository)
         const output = await usecase.execute({})
 
-        expect(output.products).toEqual(products)
+        output.products.forEach((product, i) => {
+            expect(product.id).toBe(products[i].ID)
+            expect(product.name).toBe(products[i].Name)
+            expect(product.price).toBe(products[i].Price)
+        })
     })
 })
